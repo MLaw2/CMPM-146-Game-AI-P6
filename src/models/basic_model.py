@@ -11,45 +11,38 @@ class BasicModel(Model):
         # you have to initialize self.model to a keras model
         self.model = Sequential()
         
-        self.model.add(layers.Conv2D(32, 
+        self.model.add(layers.Conv2D(8, 
                                      (3, 3), 
                                      activation='relu', 
                                      kernel_initializer='he_uniform',
                                      padding='same',
                                      input_shape=(150, 150, 3)))
         self.model.add(layers.MaxPool2D((2, 2)))
-        #self.model.add(layers.Flatten())
-        #self.model.add(layers.Dense(128, activation='relu', kernel_initializer='he_uniform'))
-        #self.model.add(layers.Dense(1, activation='sigmoid'))
-        #self.model.add(layers.Softmax())
 
-        self.model.add(layers.Conv2D(64, 
+        self.model.add(layers.Conv2D(16, 
                                      (3, 3), 
                                      activation='relu', 
                                      kernel_initializer='he_uniform',
                                      padding='same'))
         self.model.add(layers.MaxPool2D((2, 2)))
-        #self.model.add(layers.Flatten())
-        #self.model.add(layers.Dense(128, activation='relu', kernel_initializer='he_uniform'))
-        #self.model.add(layers.Dense(1, activation='sigmoid'))
-        #self.model.add(layers.Softmax())
 
-        self.model.add(layers.Conv2D(128, 
+        self.model.add(layers.Conv2D(32, 
                                      (3, 3), 
                                      activation='relu', 
                                      kernel_initializer='he_uniform',
                                      padding='same'))
         self.model.add(layers.MaxPool2D((2, 2)))
+
         self.model.add(layers.Flatten())
-        self.model.add(layers.Dense(128, activation='relu', kernel_initializer='he_uniform'))
+        self.model.add(layers.Dense(16, activation='relu', kernel_initializer='he_uniform'))
         self.model.add(layers.Dense(3, activation='sigmoid'))
-        self.model.add(layers.Softmax())
+        self.model.add(layers.Activation('softmax'))
     
     def _compile_model(self):
         # Your code goes here
         # you have to compile the keras model, similar to the example in the writeup
         self.model.compile(
-            optimizer=RMSprop(learning_rate=0.001),
+            optimizer=RMSprop(learning_rate=0.001, momentum=0.9),
             loss='categorical_crossentropy',
             metrics=['accuracy']
         )
