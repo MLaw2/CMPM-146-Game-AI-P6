@@ -1,42 +1,69 @@
 from models.model import Model
-from tensorflow.python.keras import Sequential, layers
-#from tensorflow.python.keras.layers.experimental.preprocessing import Rescaling
-#from keras.preprocessing import image
-from tensorflow.python.keras.optimizer_v2.rmsprop import RMSprop
-#from tensorflow.python.keras.optimizers import RMSprop, Adam
+# from keras.layers.experimental.preprocessing import Rescaling
+from keras import Sequential, layers
+from keras.optimizers import RMSprop, Adam
+
+import sys
+from matplotlib import pyplot
+from keras.utils import to_categorical
+from keras.models import Sequential
+from keras.layers import Conv2D
+from keras.layers import MaxPooling2D
+from keras.layers import Dense
+from keras.layers import Flatten
+from keras.optimizers import SGD
+from keras.preprocessing.image import ImageDataGenerator
 
 class BasicModel(Model):
     def _define_model(self, input_shape, categories_count):
         # Your code goes here
         # you have to initialize self.model to a keras model
-        self.model = Sequential()
+        model = Sequential()
+        filter_multiplier = 11
+        # block 1
+        model.add(Conv2D(1 * filter_multiplier, (3, 3), activation='relu', kernel_initializer='he_uniform', padding='same', input_shape=(150, 150, 3)))
+        model.add(MaxPooling2D((2, 2)))
+        # block 2
+        model.add(Conv2D(2 * filter_multiplier, (3, 3), activation='relu', kernel_initializer='he_uniform', padding='same'))
+        model.add(MaxPooling2D((2, 2)))
+        # block 3
+        model.add(Conv2D(3 * filter_multiplier, (3, 3), activation='relu', kernel_initializer='he_uniform', padding='same'))
+        model.add(MaxPooling2D((2, 2)))
         
-        self.model.add(layers.Conv2D(8, 
-                                     (3, 3), 
-                                     activation='relu', 
-                                     kernel_initializer='he_uniform',
-                                     padding='same',
-                                     input_shape=(150, 150, 3)))
-        self.model.add(layers.MaxPool2D((2, 2)))
+        model.add(Conv2D(4 * filter_multiplier, (3, 3), activation='relu', kernel_initializer='he_uniform', padding='same'))
+        model.add(MaxPooling2D((2, 2)))
+        
+        model.add(Conv2D(5 * filter_multiplier, (3, 3), activation='relu', kernel_initializer='he_uniform', padding='same'))
+        model.add(MaxPooling2D((2, 2)))
 
-        self.model.add(layers.Conv2D(16, 
-                                     (3, 3), 
-                                     activation='relu', 
-                                     kernel_initializer='he_uniform',
-                                     padding='same'))
-        self.model.add(layers.MaxPool2D((2, 2)))
+        model.add(Conv2D(6 * filter_multiplier, (3, 3), activation='relu', kernel_initializer='he_uniform', padding='same'))
+        model.add(MaxPooling2D((2, 2)))
 
-        self.model.add(layers.Conv2D(32, 
-                                     (3, 3), 
-                                     activation='relu', 
-                                     kernel_initializer='he_uniform',
-                                     padding='same'))
-        self.model.add(layers.MaxPool2D((2, 2)))
+        model.add(Conv2D(7 * filter_multiplier, (3, 3), activation='relu', kernel_initializer='he_uniform', padding='same'))
+        model.add(MaxPooling2D((2, 2)))
 
-        self.model.add(layers.Flatten())
-        self.model.add(layers.Dense(16, activation='relu', kernel_initializer='he_uniform'))
-        self.model.add(layers.Dense(3, activation='sigmoid'))
-        self.model.add(layers.Activation('softmax'))
+        # don't add any more convolutional layers, the images can't handle it
+
+        model.add(Flatten())
+
+        model.add(Dense(7 * filter_multiplier, activation='relu', kernel_initializer='he_uniform'))
+        model.add(Dense(6 * filter_multiplier, activation='relu'))
+        # model.add(Dense(5 * filter_multiplier, activation='relu'))
+        # model.add(Dense(4 * filter_multiplier, activation='relu'))
+        # model.add(Dense(3 * filter_multiplier, activation='relu'))
+
+        model.add(Dense(3, activation='softmax'))
+
+
+        # compile model
+        # opt = SGD(lr=0.001, momentum=0.9)
+        # model.compile(optimizer=opt, loss='binary_crossentropy', metrics=['accuracy'])
+        
+        # model.summary()
+        self.model = model
+        return model
+
+        pass
     
     def _compile_model(self):
         # Your code goes here
