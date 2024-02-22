@@ -54,11 +54,6 @@ class BasicModel(Model):
 
         model.add(Dense(3, activation='softmax'))
 
-
-        # compile model
-        # opt = SGD(lr=0.001, momentum=0.9)
-        # model.compile(optimizer=opt, loss='binary_crossentropy', metrics=['accuracy'])
-        
         # model.summary()
         self.model = model
         return model
@@ -70,6 +65,6 @@ class BasicModel(Model):
         # you have to compile the keras model, similar to the example in the writeup
         self.model.compile(
             optimizer=RMSprop(learning_rate=0.001, momentum=0.9),
-            loss='categorical_crossentropy',
+            loss='binary_crossentropy',
             metrics=['accuracy']
         )
