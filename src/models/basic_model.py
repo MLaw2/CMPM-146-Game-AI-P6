@@ -1,12 +1,13 @@
 from models.model import Model
-from tensorflow.keras import Sequential, layers
-from tensorflow.keras.layers.experimental.preprocessing import Rescaling
-from tensorflow.keras.optimizers import RMSprop, Adam
+from tensorflow.python.keras import Sequential, layers
+from tensorflow.python.keras.layers.experimental.preprocessing import Rescaling
+from tensorflow.python.keras.optimizers import RMSprop, Adam
 
 class BasicModel(Model):
     def _define_model(self, input_shape, categories_count):
         # Your code goes here
         # you have to initialize self.model to a keras model
+        self.model = Sequential()
         pass
     
     def _compile_model(self):
