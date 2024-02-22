@@ -42,9 +42,12 @@ if __name__ == "__main__":
     # model = Model.load_model("name_of_your_model.keras")
     # to load your history and plot it again, you can use:
     # history = np.load('results/name_of_your_model.npy',allow_pickle='TRUE').item()
-    # plot_history(history)
+    #history = np.load('Over 60%/basic_model_22_epochs_timestamp_1708590000.npy',allow_pickle='TRUE').item()
+    #history = np.load("results/basic_model_22_epochs_timestamp_1708635766.npy",allow_pickle='TRUE').item()
+    #plot_history(history)
     # 
     # Your code should change the number of epochs
+
     epochs = 22
     print('* Data preprocessing')
     train_dataset, validation_dataset, test_dataset = get_datasets()

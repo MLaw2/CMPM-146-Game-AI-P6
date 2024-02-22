@@ -1,7 +1,8 @@
 from models.model import Model
 # from keras.layers.experimental.preprocessing import Rescaling
 from keras import Sequential, layers
-from keras.optimizers import RMSprop, Adam
+#from keras.optimizers import RMSprop, Adam
+from keras.optimizers.rmsprop import RMSprop
 
 import sys
 from matplotlib import pyplot
@@ -11,6 +12,7 @@ from keras.layers import Conv2D
 from keras.layers import MaxPooling2D
 from keras.layers import Dense
 from keras.layers import Flatten
+from keras.layers import Dropout
 from keras.optimizers import SGD
 from keras.preprocessing.image import ImageDataGenerator
 
@@ -41,6 +43,7 @@ class BasicModel(Model):
 
         model.add(Conv2D(7 * filter_multiplier, (3, 3), activation='relu', kernel_initializer='he_uniform', padding='same'))
         model.add(MaxPooling2D((2, 2)))
+        model.add(Dropout(0.1))
 
         # don't add any more convolutional layers, the images can't handle it
 
