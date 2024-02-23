@@ -21,10 +21,11 @@ class BasicModel(Model):
         # Your code goes here
         # you have to initialize self.model to a keras model
         model = Sequential()
-        filter_multiplier = 11
+        filter_multiplier = 11.55
         # block 1
         model.add(Conv2D(1 * filter_multiplier, (3, 3), activation='relu', kernel_initializer='he_uniform', padding='same', input_shape=(150, 150, 3)))
         model.add(MaxPooling2D((2, 2)))
+        model.add(Dropout(0.5))
         # block 2
         model.add(Conv2D(2 * filter_multiplier, (3, 3), activation='relu', kernel_initializer='he_uniform', padding='same'))
         model.add(MaxPooling2D((2, 2)))
@@ -43,7 +44,8 @@ class BasicModel(Model):
 
         model.add(Conv2D(7 * filter_multiplier, (3, 3), activation='relu', kernel_initializer='he_uniform', padding='same'))
         model.add(MaxPooling2D((2, 2)))
-        model.add(Dropout(0.1))
+        model.add(Dropout(0.2))
+
 
         # don't add any more convolutional layers, the images can't handle it
 
@@ -60,14 +62,12 @@ class BasicModel(Model):
         # model.summary()
         self.model = model
         return model
-
-        pass
     
     def _compile_model(self):
         # Your code goes here
         # you have to compile the keras model, similar to the example in the writeup
         self.model.compile(
             optimizer=RMSprop(learning_rate=0.001, momentum=0.9),
-            loss='binary_crossentropy',
+            loss='categorical_crossentropy',
             metrics=['accuracy']
         )
