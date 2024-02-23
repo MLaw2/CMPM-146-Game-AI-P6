@@ -111,15 +111,14 @@ class UserWebcamPlayer:
 
         # return an integer (0, 1 or 2), otherwise the code will throw an error
         
-        img_data = image_utils.img_to_array(img)
-        img_data = img_data.reshape(1, image_size, image_size, 3)
-        img_data = img.astype('float32')
-        
+        resized_image = np.resize(img, (image_size[0], image_size[1], 3)).reshape(150, 150, 3)
+        resized_image = np.expand_dims(resized_image, axis=0)
+
         model = load_model('results/basic_model_22_epochs_timestamp_1708639581.keras')
 
-        result = model.predict(img)
-
-        return 1
+        result = model.predict(resized_image)
+        print(result)
+        return int(np.argmax(result))
     
     def get_move(self, board_state):
         row, col = None, None
