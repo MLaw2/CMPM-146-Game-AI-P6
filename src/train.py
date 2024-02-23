@@ -44,6 +44,7 @@ if __name__ == "__main__":
     # history = np.load('results/name_of_your_model.npy',allow_pickle='TRUE').item()
 
     # history = np.load('Over 60%/basic_model_22_epochs_timestamp_1708590000.npy',allow_pickle='TRUE').item()
+    '''
     model = Model.load_model("results/basic_model_22_epochs_timestamp_1708639581.keras")
     history = np.load("results/basic_model_22_epochs_timestamp_1708639581.npy",allow_pickle='TRUE').item()
     print('* Data preprocessing')
@@ -53,26 +54,26 @@ if __name__ == "__main__":
     model.evaluate(test_dataset)
     model.print_summary()
     plot_history(history)
-    # 
+    '''
 
     # Your code should change the number of epochs
 
-    # epochs = 22
-    # print('* Data preprocessing')
-    # train_dataset, validation_dataset, test_dataset = get_datasets()
-    # name = 'basic_model'
-    # model_class = models[name]
-    # print('* Training {} for {} epochs'.format(name, epochs))
-    # model = model_class(input_shape, categories_count)
-    # model.print_summary()
-    # history = model.train_model(train_dataset, validation_dataset, epochs)
-    # print('* Evaluating {}'.format(name))
-    # model.evaluate(test_dataset)
-    # print('* Confusion Matrix for {}'.format(name))
-    # print(model.get_confusion_matrix(test_dataset))
-    # model_name = '{}_{}_epochs_timestamp_{}'.format(name, epochs, int(time.time()))
-    # filename = 'results/{}.keras'.format(model_name)
-    # model.save_model(filename)
-    # np.save('results/{}.npy'.format(model_name), history)
-    # print('* Model saved as {}'.format(filename))
-    # plot_history(history)
+    epochs = 30
+    print('* Data preprocessing')
+    train_dataset, validation_dataset, test_dataset = get_datasets()
+    name = 'basic_model'
+    model_class = models[name]
+    print('* Training {} for {} epochs'.format(name, epochs))
+    model = model_class(input_shape, categories_count)
+    model.print_summary()
+    history = model.train_model(train_dataset, validation_dataset, epochs)
+    print('* Evaluating {}'.format(name))
+    model.evaluate(test_dataset)
+    print('* Confusion Matrix for {}'.format(name))
+    print(model.get_confusion_matrix(test_dataset))
+    model_name = '{}_{}_epochs_timestamp_{}'.format(name, epochs, int(time.time()))
+    filename = 'results/{}.keras'.format(model_name)
+    model.save_model(filename)
+    np.save('results/{}.npy'.format(model_name), history)
+    print('* Model saved as {}'.format(filename))
+    plot_history(history)

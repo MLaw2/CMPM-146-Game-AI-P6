@@ -114,7 +114,7 @@ class UserWebcamPlayer:
         resized_image = np.resize(img, (image_size[0], image_size[1], 3)).reshape(150, 150, 3)
         resized_image = np.expand_dims(resized_image, axis=0)
 
-        model = load_model('results/basic_model_22_epochs_timestamp_1708639581.keras')
+        model = load_model('results/basic_model_30_epochs_timestamp_1708659886.keras')
 
         result = model.predict(resized_image)
         print(result)
